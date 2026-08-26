@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const rl = checkRateLimit(`relay:${clientKey(req.headers)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  const rl = await checkRateLimit(`relay:${clientKey(req.headers)}`, RATE_LIMIT, RATE_WINDOW_MS);
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many relay requests. Try again later.", code: "rate_limited" },

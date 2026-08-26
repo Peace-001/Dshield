@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const rl = checkRateLimit(`faucet:${clientKey(req.headers)}`, RATE_LIMIT, RATE_WINDOW_MS);
+  const rl = await checkRateLimit(`faucet:${clientKey(req.headers)}`, RATE_LIMIT, RATE_WINDOW_MS);
   if (!rl.allowed) {
     return NextResponse.json(
       { error: "Too many faucet requests. Try again later." },
